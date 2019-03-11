@@ -141,6 +141,7 @@ module LParserC =
         |> ConChar
         |> charParser '\''
 
+    //FIXME
     let inline parseString s =
         s
         |> charParser '\"'
