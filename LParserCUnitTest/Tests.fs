@@ -51,3 +51,14 @@ type TestClass () =
         Assert.AreNotEqual(None, r)
         let r = Some (createStrStream "\"ab\\cde\"") |> parseString
         Assert.AreNotEqual(None, r)
+
+module Program =
+    let debug _ = 
+        let r = TestClass ()
+        r.TestUintParser ()
+        r.TestIntParser ()
+        r.TestRationalParser ()
+        r.TestFloatParser ()
+        r.TestCharParser ()
+        r.TestStringParser ()
+        0
