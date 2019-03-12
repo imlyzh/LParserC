@@ -97,15 +97,27 @@ module LParserC =
 
     let emptyParser = charParser ' ' * charParser '\n' * charParser '\t' * charParser '\r'
 
-    let inline emptysParser v = (rpt emptyParser) v
+    let inline parseSegm s =
+        charParser '(' *
+        charParser ')' *
+        charParser '[' *
+        charParser ']' *
+        charParser '<' *
+        charParser '>' *
+        charParser ',' *
+        charParser '.' *
+        charParser ',' *
+        charParser '.' *
+        emptyParser
 
-    let numberParserR v =
-        let (head, tail) = slice v
+
+    let numberParserR s =
+        let (head, tail) = slice s
         if head >= '0' && head <= '9' then Some tail else None
 
     let numberParser = boxSay numberParserR
 
-    let inline numbersParserR v = (rpt numberParser) v
+    let inline numbersParserR s = (rpt numberParser) s
 
     let numbersParser = numbersParserR
 
@@ -143,7 +155,6 @@ module LParserC =
         |> ConChar
         |> charParser '\''
 
-    //FIXME
     let inline parseString s =
         s 
         |> charParser '\"'

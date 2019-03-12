@@ -19,6 +19,13 @@ type TestClass () =
         Assert.AreNotEqual(None, r)
 
     [<TestMethod>]
+    member this.TestFloatParser () =
+        let r = Some (createStrStream "-123.456") |> parseFloat
+        Assert.AreNotEqual(None, r)
+        let r = Some (createStrStream "+123.456") |> parseFloat
+        Assert.AreNotEqual(None, r)
+
+    [<TestMethod>]
     member this.TestRationalParser () =
         let r = Some (createStrStream "-123/+123") |> parseRational
         Assert.AreNotEqual(None, r)
@@ -27,13 +34,6 @@ type TestClass () =
         let r = Some (createStrStream "+123/-456") |> parseRational
         Assert.AreNotEqual(None, r)
         let r = Some (createStrStream "-123/+456") |> parseRational
-        Assert.AreNotEqual(None, r)
-
-    [<TestMethod>]
-    member this.TestFloatParser () =
-        let r = Some (createStrStream "-123.456") |> parseFloat
-        Assert.AreNotEqual(None, r)
-        let r = Some (createStrStream "+123.456") |> parseFloat
         Assert.AreNotEqual(None, r)
 
     [<TestMethod>]
