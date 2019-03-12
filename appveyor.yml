@@ -10,9 +10,6 @@ test_script:
 
 
     dotnet vstest "C:\projects\lparserc\LParserCUnitTest\bin\Debug\netcoreapp2.1\LParserCUnitTest.dll" --Parallel
-artifacts:
-- path: LParserC\bin\Debug\netcoreapp2.1\LParserC.dll
-  name: LParserC.dll
 deploy:
 - provider: GitHub
   tag: E
