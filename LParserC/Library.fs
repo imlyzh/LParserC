@@ -110,17 +110,17 @@ module LParserC =
     let numbersParser = numbersParserR
 
     let anyChar =
-        boxSay ( fun x ->
-            let (_, t) = slice x
+        boxSay ( fun s ->
+            let (_, t) = slice s
             Some t)
 
-    let inline ConChar x =
-        x |> (charParser '\\' >> anyChar) * anyChar
+    let inline ConChar s =
+        s |> (charParser '\\' + anyChar) * anyChar
 
     // Export
 
-    let inline parseUint v =
-        v
+    let inline parseUint s =
+        s
         |> numberParser
         |> numbersParser
 
@@ -130,24 +130,25 @@ module LParserC =
         |> parseUint
 
     let inline parseFloat s =
-        s
-        |> (parseInt * parseUint)
-        |> charParser '.'
-        |> parseUint
+        s |>
+        (parseInt * parseUint) + charParser '.' + parseUint
+
+    let inline parseRational s =
+        s |>
+        (parseInt * parseUint) |> charParser '/' |> (parseInt * parseUint)
 
     let inline parseChar s =
-        s
+        s 
         |> charParser '\''
         |> ConChar
         |> charParser '\''
 
     //FIXME
     let inline parseString s =
-        s
+        s 
         |> charParser '\"'
-        |> (rpt ConChar)
-        |> charParser '\"'
-
+        |> rpt (charParser '\"' * ConChar)
+        
 // please use automatic curry
 // demo: (charParser 'a') s
 // demo: (boxSay parserFunc) s
